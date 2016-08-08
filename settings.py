@@ -3,7 +3,7 @@
 General = {
 	'width'		: 630,
 	'height'	: 600,
-	'background': (8,20,40),
+	'background': (200,220,248),
 	'drawOrder'	: ['penthagon','triangle','ball1','ball2','ball3','ball4']
 }
 
@@ -11,37 +11,43 @@ General = {
 # Triangle
 Decaminutes = {
 	# the size of the square area with respect to the window width (in percentage)
-	'size'		: 31.75,
+	'size'		: 26,
 
 	# where to draw the triangle
-	'position'	:	(35, 45.24),
+	'position'	:	(50, 46),
 
 	# an offset initial integer rotation
 	'offset'	:	0,
 
+	# the percentage of the border (100 draws a full triangle)
+	'border'	:	100,
+
 	# the colors of the vertices
-	1 : (255, 0, 0),
-	2 : (0, 255, 0),
-	3 : (0, 0, 255)
+	1 : (185, 16, 49),
+	2 : (36, 29, 133),
+	3 : (93, 24, 130)
 }
 
 # Penthagon
 Minutes = {
 	# the size of the square area with respect to the window width (in percentage)
-	'size'		: 68.25,
+	'size'		: 70,
 
 	# where to draw the penthagon
-	'position'	:	(16.67, 26.98),
+	'position'	:	(50, 50),
 
 	# an offset initial integer rotation
 	'offset'	:	0,
 	
+	# the percentage of the border (100 draws a full penthagon)
+	'border'	:	25,
+
 	# the colors of the vertices
-	1 : (204,255,0),
-	2 : (127,66,51),
-	3 : (64,120,211),
-	4 : (238,47,127),
-	5 : (237,2,11)
+	1 : (89,139,114),
+	2 : (237,224,146),
+	3 : (242,173,114),
+	4 : (215,98,88),
+	5 : (140,70,70)
 }
 
 
@@ -51,27 +57,27 @@ Hours = [
 		
 	{ # First ball
 	
-		'size'		: 15.87,
-		'position'	: (16.66, 17.46),
-		'color'		: (0, 0, 32)
+		'size'		: 8,
+		'position'	: (36, 51),
+		'color'		: (16, 16, 22)
 	},
     { # Second ball	
 	
-		'size'		: 15.87,
-		'position'	: (35, 7.94),
-		'color'		: (0, 0, 64)
+		'size'		: 8,
+		'position'	: (42, 62),
+		'color'		: (47, 47, 55)
 	},
 	{ # Third ball
 	
-		'size'		: 15.87,
-		'position'	: (53.33, 7.94),
-		'color'		: (0, 0, 96)
+		'size'		: 8,
+		'position'	: (58, 62),
+		'color'		: (62, 62, 70)
 	},
 	{ # Fourth ball
 	
-		'size'		: 15.87,
-		'position'	: (71.67, 17.46),
-		'color'		: (0, 0, 128)
+		'size'		: 8,
+		'position'	: (64, 51),
+		'color'		: (129, 129, 138)
 	}
 ]
 

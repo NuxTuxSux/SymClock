@@ -4,7 +4,7 @@ import pygame,math
 
 class Polygon:		# fare in modo che la simmetria del triangolo sia quella giusta
 
-	def __init__(self, surface, colors, offset):
+	def __init__(self, surface, colors, offset, border):
 		self.n = len(colors)
 		self._w, self._h = surface.get_size()		# comunque e' per superfici quadrate, darlo per assunto?
 		self.state = False, 0						# (i,j)   i = True,False per la simmetria, j = 0,...,n-1 per la rotazione
@@ -16,7 +16,7 @@ class Polygon:		# fare in modo che la simmetria del triangolo sia quella giusta
 		for i in range(self.n):
 			s = pygame.Surface(surface.get_size(),flags = pygame.SRCALPHA)
 			cols = colors[i%self.n:] + colors[:i%self.n]
-			drawPol(vertices,cols,s)
+			drawPol(vertices,cols,s,border)
 			self.figures.append(s)
 	
 	def change_state(self,info):
@@ -30,8 +30,18 @@ class Polygon:		# fare in modo che la simmetria del triangolo sia quella giusta
 
 
 
-def drawPol(ps,colors,surface):	# funziona meglio per poligoni regolari
-
+def drawPol(ps, colors, surface, border):	# funziona meglio per poligoni regolari
+	n = len(ps)
+	xc, yc = 0, 0
+	for p in ps:
+		xc += p[0]
+		yc += p[1]
+	xc /= n
+	yc /= n
+	qs = []
+	for p in ps:
+		qs.append((xc + (p[0] - xc) * (100-border) / 100., yc + (p[1] - yc) * (100-border) /100.))
+	
 	def color(i,j):
 		r,g,b = 0,0,0
 		ws = weights((i,j),ps,side)
@@ -65,11 +75,13 @@ def drawPol(ps,colors,surface):	# funziona meglio per poligoni regolari
 			return a
 		thetas = [angle(p1,q,p2) for p1,p2 in zip(ps,ps[1:]+[ps[0]])]
 		return all(x>=0 for x in thetas)
-
+	
 	side = math.sqrt((ps[0][0]-ps[1][0])**2+(ps[0][1]-ps[1][1])**2)
 	x,X=int(min(x for x,y in ps)),int(max(x for x,y in ps))
 	y,Y=int(min(y for x,y in ps)),int(max(y for x,y in ps))
+	
+	
 	for i in range(x,X+1):
 		for j in range(y,Y+1):
-			if inside((i,j),ps):
+			if inside((i,j),ps) and (border == 100 or not inside((i,j),qs)):
 				surface.set_at((i,j),color(i,j))

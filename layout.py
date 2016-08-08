@@ -23,14 +23,16 @@ class Layout:
 		pSettings = settings.Minutes
 		size = pSettings['size']*self.Width/100.
 		surfPent = pygame.Surface((size,size),flags = pygame.SRCALPHA)
-		self.penthagon = Polygon(surfPent,[pSettings[1],pSettings[2],pSettings[3],pSettings[4],pSettings[5]],pSettings['offset'])
+		border = pSettings['border']
+		self.penthagon = Polygon(surfPent,[pSettings[1],pSettings[2],pSettings[3],pSettings[4],pSettings[5]],pSettings['offset'],border)
 		pos = pSettings['position'][0] * self.Width / 100., pSettings['position'][1] * self.Width / 100.
 		objs['penthagon'] = self.penthagon, pos
 
 		tSettings = settings.Decaminutes
 		size = tSettings['size']*self.Width/100.
 		surfTriang = pygame.Surface((size,size), flags = pygame.SRCALPHA)
-		self.triangle = Polygon(surfTriang,[tSettings[1],tSettings[2],tSettings[3]],tSettings['offset'])
+		border = tSettings['border']
+		self.triangle = Polygon(surfTriang,[tSettings[1],tSettings[2],tSettings[3]],tSettings['offset'],border)
 		pos = tSettings['position'][0] * self.Width / 100., tSettings['position'][1] * self.Width / 100.
 		objs['triangle'] = self.triangle, pos
 
@@ -42,8 +44,9 @@ class Layout:
 		self.screen.fill(pygame.Color(r,g,b))
 	
 		for objName in settings.General['drawOrder']:
-			obj, pos = self.objects[objName]
+			obj, (x,y) = self.objects[objName]
 			obj.render()
-			self.screen.blit(obj.surface,pos)
+			w, h = obj.surface.get_size()
+			self.screen.blit(obj.surface,(x - w * .5, y - h * .5))
 		pygame.display.flip()
 
