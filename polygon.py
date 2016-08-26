@@ -1,10 +1,10 @@
 # memorizzare le immagini disegnate in modo da non ridisegnarle
 
-import pygame,math
+import pygame, math, pickle
 
 class Polygon:		# fare in modo che la simmetria del triangolo sia quella giusta
 
-	def __init__(self, surface, colors, offset, border):
+	def __init__(self, surface, colors, offset, border, filename = None):
 		self.n = len(colors)
 		self._w, self._h = surface.get_size()		# comunque e' per superfici quadrate, darlo per assunto?
 		self.state = False, 0						# (i,j)   i = True,False per la simmetria, j = 0,...,n-1 per la rotazione
@@ -13,11 +13,17 @@ class Polygon:		# fare in modo che la simmetria del triangolo sia quella giusta
 		r=self._w/2
 		vertices = [(r+r*math.cos((i + offset * .5)*alpha-math.pi/(2*self.n)),r+r*math.sin((i + offset * .5)*alpha-math.pi/(2*self.n))) for i in range(-1,self.n-1)] #per il pentagono -1,4
 		self.figures = []
-		for i in range(self.n):
-			s = pygame.Surface(surface.get_size(),flags = pygame.SRCALPHA)
-			cols = colors[i%self.n:] + colors[:i%self.n]
-			drawPol(vertices,cols,s,border)
-			self.figures.append(s)
+
+		# Salva le figure come lista di stringe che poi vanno lette con pygame (che serializza le immagini)
+		try:
+			self.figures = map(lambda s: pygame.image.fromstring(s,(self._w,self._h),'RGBA'), pickle.load(open(filename)))
+		except:
+			for i in range(self.n):
+				s = pygame.Surface(surface.get_size(),flags = pygame.SRCALPHA)
+				cols = colors[i%self.n:] + colors[:i%self.n]
+				drawPol(vertices,cols,s,border)
+				self.figures.append(s)
+			pickle.dump(map(lambda i: pygame.image.tostring(i,'RGBA'),self.figures),open(filename,'w'))
 	
 	def change_state(self,info):
 		self.state = info>(self.n-1), info%self.n
