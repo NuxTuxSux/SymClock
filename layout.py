@@ -24,7 +24,7 @@ class Layout:
 		size = pSettings['size']*self.Width/100.
 		surfPent = pygame.Surface((size,size),flags = pygame.SRCALPHA)
 		border = pSettings['border']
-		self.penthagon = Polygon(surfPent,[pSettings[1],pSettings[2],pSettings[3],pSettings[4],pSettings[5]],pSettings['offset'],border,'penthagon')
+		self.penthagon = Polygon(surfPent,[pSettings[1],pSettings[2],pSettings[3],pSettings[4],pSettings[5]],pSettings['offset'],border,pSettings['image'])
 		pos = pSettings['position'][0] * self.Width / 100., pSettings['position'][1] * self.Width / 100.
 		objs['penthagon'] = self.penthagon, pos
 
@@ -32,7 +32,7 @@ class Layout:
 		size = tSettings['size']*self.Width/100.
 		surfTriang = pygame.Surface((size,size), flags = pygame.SRCALPHA)
 		border = tSettings['border']
-		self.triangle = Polygon(surfTriang,[tSettings[1],tSettings[2],tSettings[3]],tSettings['offset'],border,'triangle')
+		self.triangle = Polygon(surfTriang,[tSettings[1],tSettings[2],tSettings[3]],tSettings['offset'],border,tSettings['image'])
 		pos = tSettings['position'][0] * self.Width / 100., tSettings['position'][1] * self.Width / 100.
 		objs['triangle'] = self.triangle, pos
 

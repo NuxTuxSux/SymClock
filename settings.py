@@ -25,7 +25,10 @@ Decaminutes = {
 	# the colors of the vertices
 	1 : (185, 16, 49),
 	2 : (36, 29, 133),
-	3 : (93, 24, 130)
+	3 : (93, 24, 130),
+
+	# where to save the precalculated image for faster loading
+	'image'		:	'triangolo'
 }
 
 # Penthagon
@@ -47,7 +50,11 @@ Minutes = {
 	2 : (237,224,146),
 	3 : (242,173,114),
 	4 : (215,98,88),
-	5 : (140,70,70)
+	5 : (140,70,70),
+
+	# where to save the precalculated image for faster loading
+	'image'		:	'pentagono'
+
 }
 
 
