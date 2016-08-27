@@ -5,9 +5,10 @@ from layout import Layout
 from polygon import *
 from balls import *
 
+#	Fare hash di settings ;)
+
 
 class Clock:
-	# cambiare la nomenclatura per i nomi lunghi?
 
 	def __init__(self, hours, decamins, mins):
 		self.hours = hours
@@ -38,12 +39,18 @@ def surf2html(surface, form = 'png'):
 		outMemFile.seek(0)
 		return base64.b64encode(outMemFile.read())
 
-	res = "<!DOCTYPE html><html><head><title>Display Image</title></head><body><center><img style='display:block;'id='base64image'src='data:image/jpg;base64,"
+	res = "<!DOCTYPE html><html><head><title>Display Image</title></head><body bgcolor=#"
+	res += color2hex(settings.General['background'])
+	res += "><center><img style='display:block;'id='base64image'src='data:image/jpg;base64,"
 	res += surf2base64(surface,form)
 	res += "'/></center></body>"
 	return res
 
-
+def color2hex(rgb):
+	def d2h(n):
+		digits = map(str,range(10))+['A','B','C','D','E','F']
+		return digits[n/16] + digits[n%16]
+	return d2h(rgb[0]) + d2h(rgb[1]) + d2h(rgb[2])
 
 if __name__ == "__main__":
 	pygame.init()
