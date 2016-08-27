@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys
 import settings
 from balls import Ball,Balls
 from polygon import Polygon
@@ -48,5 +48,6 @@ class Layout:
 			obj.render()
 			w, h = obj.surface.get_size()
 			self.screen.blit(obj.surface,(x - w * .5, y - h * .5))
-		pygame.display.flip()
+		if len(sys.argv) == 1:
+			pygame.display.flip()
 

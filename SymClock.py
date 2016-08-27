@@ -1,13 +1,10 @@
-import pygame,math,time
+import pygame, math, time, sys
 import settings
 
 from layout import Layout
 from polygon import *
 from balls import *
 
-pygame.init()
-size = settings.General['width'], settings.General['height']
-screen = pygame.display.set_mode(size)
 
 class Clock:
 	# cambiare la nomenclatura per i nomi lunghi?
@@ -28,15 +25,56 @@ class Clock:
 
 
 
+def surf2html(surface, form = 'png'):
+	from PIL import Image
+	from StringIO import StringIO
+	import base64	
+	def surf2base64(surf, frm):
+		strCode = pygame.image.tostring(surf,'RGBA')
+		#pilImage = Image.frombuffer('RGBA',surf.get_size(),strCode)
+		pilImage = Image.frombuffer('RGBA', surf.get_size(), strCode, 'raw', 'RGBA', 0, 1)
+		outMemFile = StringIO()
+		pilImage.save(outMemFile,frm)
+		outMemFile.seek(0)
+		return base64.b64encode(outMemFile.read())
+
+	res = "<!DOCTYPE html><html><head><title>Display Image</title></head><body><center><img style='display:block;'id='base64image'src='data:image/jpg;base64,"
+	res += surf2base64(surface,form)
+	res += "'/></center></body>"
+	return res
+
 
 
 if __name__ == "__main__":
+	pygame.init()
+	size = settings.General['width'], settings.General['height']
+	
+	args = sys.argv[1:]
+	if args:
+		screen = pygame.Surface(size)
+	else:
+		screen = pygame.display.set_mode(size)
+	
 	l=Layout(screen)
 	c = Clock(l.balls, l.triangle, l.penthagon)
-	while True:
+	if not args:
+		while True:
+			c.display_time()
+			l.draw()
+			time.sleep(20)
+	else:
+		if len(args) > 1:
+			filename = args[1]
+		else:
+			h, m = time.localtime()[3:5]
+			filename = str(h) + '.' + str(m)
 		c.display_time()
 		l.draw()
-		time.sleep(20)
+		if args[0] == 'img':
+			pygame.image.save(l.screen,filename + '.png')
+		elif args[0] == 'web':
+			open(filename + '.html','w').write(surf2html(l.screen))
+
 	
 
 
