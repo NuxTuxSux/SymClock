@@ -79,8 +79,11 @@ if __name__ == "__main__":
 		l.draw()
 		if args[0] == 'img':
 			pygame.image.save(l.screen,filename + '.png')
-		elif args[0] == 'web':
+		elif args[0] == 'html':
 			open(filename + '.html','w').write(surf2html(l.screen))
+		elif args[0] == 'web':
+			import Server
+			Server.publishPage(surf2html(l.screen))
 
 	
 
